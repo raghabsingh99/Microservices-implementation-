@@ -1,0 +1,43 @@
+server:
+  port: 8761  # Port for the ProductService application
+
+spring:
+  application:
+    name: product-service  # Name of the application for Eureka registration
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/productdb  # Database connection URL
+    username: root                              # Database username
+    password: password                          # Database password
+    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL driver class
+
+  jpa:
+    hibernate:
+      ddl-auto: update                          # Automatically updates database schema
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true                              # Enable SQL logging for debugging
+
+  cloud:
+    config:
+      enabled: false                            # Disable Spring Cloud Config if not used
+
+eureka:
+  client:
+    register-with-eureka: false                  # Register this service with Eureka
+    fetch-registry: false                        # Fetch service registry from Eureka
+    service-url:
+      defaultZone: http://localhost:8761/eureka # Eureka server URL
+
+logging:
+  level:
+    org.springframework.cloud.netflix.eureka: DEBUG # Enable detailed logging for Eureka
+    org.springframework.boot: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'                            # Expose all actuator endpoints
+  endpoint:
+    health:
+      show-details: always                      # Show detailed health endpoint info
