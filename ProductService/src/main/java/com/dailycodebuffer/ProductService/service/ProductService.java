@@ -6,5 +6,7 @@ import com.dailycodebuffer.ProductService.model.ProductResponse;
 public interface ProductService {
     long addProduct(ProductRequest productRequest);
 
-    ProductResponse getProductById(Long productId);
+    ProductResponse getProductById(long productId);
+
+    void reduceQuantity(long productId, long quantity);
 }

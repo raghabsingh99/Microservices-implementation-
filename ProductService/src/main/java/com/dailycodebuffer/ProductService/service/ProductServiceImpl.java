@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
+
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     public long addProduct(ProductRequest productRequest) {
         log.info("Adding Product...");
-
         Product product = Product.builder()
                 .productName(productRequest.getName())
                 .quantity(productRequest.getQuantity())
@@ -31,15 +31,29 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductResponse getProductById(Long productId) {
-        log.info("Get the Product for ProductID:{",productId);
-        Product product =
-                productRepository.findById(productId)
-                        .orElseThrow(()->new ProductServiceCustomException("Product with the given id not found","Product not found"));
+    public ProductResponse getProductById(long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductServiceCustomException(
+                        "Product with the given id not found", "PRODUCT_NOT_FOUND"));
 
-        ProductResponse productResponse =
-                new ProductResponse();
-        BeanUtils.copyProperties(product,productResponse);
+        ProductResponse productResponse = new ProductResponse();
+        BeanUtils.copyProperties(product, productResponse);
         return productResponse;
+    }
+
+    @Override
+    public void reduceQuantity(long productId, long quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductServiceCustomException(
+                        "Product with given Id not found", "PRODUCT_NOT_FOUND"));
+
+        if (product.getQuantity() < quantity) {
+            throw new ProductServiceCustomException(
+                    "Insufficient quantity available", "INSUFFICIENT_QUANTITY");
+        }
+
+        product.setQuantity(product.getQuantity() - quantity);
+        productRepository.save(product);
+        log.info("Product Quantity updated Successfully");
     }
 }

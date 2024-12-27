@@ -5,11 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -20,15 +16,14 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long productId;
+    private long productId;
 
-    @Column(name = "PRODUCT_NAME", nullable = false)
+    @Column(name = "PRODUCT_NAME")
     private String productName;
 
-    @Column(name = "PRICE", nullable = false)
-    private Long price;
+    @Column(name = "PRICE")
+    private long price;
 
-    @Column(name = "QUANTITY", nullable = false)
-    private Long quantity;
-
+    @Column(name = "QUANTITY")
+    private long quantity;
 }
