@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/orderdb
+    username: root
+    password: password
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  application:
+    name: ORDER-SERVICE
+  cloud:
+    config:
+      uri: http://localhost:9296  # Ensure this points to your Config Server
+  cloud:
+    config:
+      enabled: false  # Disable Spring Cloud Config integration
+
+  #server:
+#  port: 8080
+#
+#spring:
+#  datasource:
+#    url: jdbc:mysql://${DB_HOST:localhost}:3306/productdb
+#    username: root
+#    password: password
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQLDialect
+#    hibernate:
+#      ddl-auto: update
+#  application:
+#    name: PRODUCT-SERVICE
+#
+
+#  # Uncomment the line below if you want to disable config import check as well
+#  # spring.cloud.config.import-check.enabled: false
