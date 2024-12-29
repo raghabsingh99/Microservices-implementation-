@@ -15,7 +15,13 @@ spring:
     name: PRODUCT-SERVICE
   config:
     import: configserver:http://localhost:9296
-#
+  zipkin:
+    enabled: false
+  sleuth:
+    enabled: false
+  main:
+    allow-bean-definition-overriding: true # Optional for avoiding bean clashes
+
 #eureka:
 #  instance:
 #    prefer-ip-address: true
